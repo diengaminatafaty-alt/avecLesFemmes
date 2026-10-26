@@ -9,6 +9,12 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CampagneRepository::class)]
+#[ORM\InheritanceType('SINGLE_TABLE')]
+#[ORM\DiscriminatorColumn(name: 'type', type: 'string')]
+#[ORM\DiscriminatorMap([
+    'campagne' => Campagne::class,
+    'tontine'  => Tontine::class,
+])]
 class Campagne
 {
     #[ORM\Id]
