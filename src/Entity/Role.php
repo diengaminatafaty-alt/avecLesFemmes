@@ -39,6 +39,10 @@ class Role
     #[ORM\OneToMany(targetEntity: ModePayement::class, mappedBy: 'role')]
     private Collection $modePayements;
 
+    #[ORM\ManyToOne(inversedBy: 'roles')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Groupement $groupement = null;
+
     public function __construct()
     {
         $this->modePayements = new ArrayCollection();
@@ -147,6 +151,18 @@ class Role
                 $modePayement->setRole(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getGroupement(): ?Groupement
+    {
+        return $this->groupement;
+    }
+
+    public function setGroupement(?Groupement $groupement): static
+    {
+        $this->groupement = $groupement;
 
         return $this;
     }
