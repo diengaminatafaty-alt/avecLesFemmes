@@ -43,6 +43,9 @@ class Role
     #[ORM\JoinColumn(nullable: false)]
     private ?Groupement $groupement = null;
 
+    #[ORM\ManyToOne(inversedBy: 'roles')]
+    private ?Pret $pret = null;
+
     public function __construct()
     {
         $this->modePayements = new ArrayCollection();
@@ -163,6 +166,18 @@ class Role
     public function setGroupement(?Groupement $groupement): static
     {
         $this->groupement = $groupement;
+
+        return $this;
+    }
+
+    public function getPret(): ?Pret
+    {
+        return $this->pret;
+    }
+
+    public function setPret(?Pret $pret): static
+    {
+        $this->pret = $pret;
 
         return $this;
     }
