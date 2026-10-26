@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\RoleRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: RoleRepository::class)]
@@ -30,6 +32,17 @@ class Role
 
     #[ORM\Column(length: 50)]
     private ?string $fonction = null;
+
+    /**
+     * @var Collection<int, ModePayement>
+     */
+    #[ORM\OneToMany(targetEntity: ModePayement::class, mappedBy: 'role')]
+    private Collection $modePayements;
+
+    public function __construct()
+    {
+        $this->modePayements = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -104,6 +117,36 @@ class Role
     public function setFonction(string $fonction): static
     {
         $this->fonction = $fonction;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ModePayement>
+     */
+    public function getModePayements(): Collection
+    {
+        return $this->modePayements;
+    }
+
+    public function addModePayement(ModePayement $modePayement): static
+    {
+        if (!$this->modePayements->contains($modePayement)) {
+            $this->modePayements->add($modePayement);
+            $modePayement->setRole($this);
+        }
+
+        return $this;
+    }
+
+    public function removeModePayement(ModePayement $modePayement): static
+    {
+        if ($this->modePayements->removeElement($modePayement)) {
+            // set the owning side to null (unless already changed)
+            if ($modePayement->getRole() === $this) {
+                $modePayement->setRole(null);
+            }
+        }
 
         return $this;
     }

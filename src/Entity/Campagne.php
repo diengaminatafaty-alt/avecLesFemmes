@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\CampagneRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -25,6 +27,17 @@ class Campagne
 
     #[ORM\Column]
     private ?int $montant = null;
+
+    /**
+     * @var Collection<int, ModePayement>
+     */
+    #[ORM\OneToMany(targetEntity: ModePayement::class, mappedBy: 'campagne')]
+    private Collection $modePayements;
+
+    public function __construct()
+    {
+        $this->modePayements = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -75,6 +88,36 @@ class Campagne
     public function setMontant(int $montant): static
     {
         $this->montant = $montant;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ModePayement>
+     */
+    public function getModePayements(): Collection
+    {
+        return $this->modePayements;
+    }
+
+    public function addModePayement(ModePayement $modePayement): static
+    {
+        if (!$this->modePayements->contains($modePayement)) {
+            $this->modePayements->add($modePayement);
+            $modePayement->setCampagne($this);
+        }
+
+        return $this;
+    }
+
+    public function removeModePayement(ModePayement $modePayement): static
+    {
+        if ($this->modePayements->removeElement($modePayement)) {
+            // set the owning side to null (unless already changed)
+            if ($modePayement->getCampagne() === $this) {
+                $modePayement->setCampagne(null);
+            }
+        }
 
         return $this;
     }
