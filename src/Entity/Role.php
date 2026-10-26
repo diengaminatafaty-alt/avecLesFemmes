@@ -13,6 +13,8 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\DiscriminatorMap([
     'role'   => Role::class,
     'admin'  => Admin::class,
+    'membre' => Membre::class,
+
 ])]
 class Role
 {
