@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Enum\Periodicite;
 use App\Repository\CampagneRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -45,9 +46,31 @@ class Campagne
     #[ORM\JoinColumn(nullable: false)]
     private ?Groupement $groupement = null;
 
+    #[ORM\Column(enumType: Periodicite::class)]
+    private ?Periodicite $periodicite = null;
+
+    #[ORM\Column]
+    private ?int $jourRencontre = null;
+
+    #[ORM\Column]
+    private ?int $contributionCaissePresent = null;
+
+    #[ORM\Column]
+    private ?int $contributionCaisseAbsent = null;
+
+    #[ORM\Column]
+    private ?int $amendeJournaliere = null;
+
+    /**
+     * @var Collection<int, Seance>
+     */
+    #[ORM\OneToMany(targetEntity: Seance::class, mappedBy: 'campagne')]
+    private Collection $seances;
+
     public function __construct()
     {
         $this->modePayements = new ArrayCollection();
+        $this->seances = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -141,6 +164,96 @@ class Campagne
     public function setGroupement(?Groupement $groupement): static
     {
         $this->groupement = $groupement;
+
+        return $this;
+    }
+
+    public function getPeriodicite(): ?Periodicite
+    {
+        return $this->periodicite;
+    }
+
+    public function setPeriodicite(Periodicite $periodicite): static
+    {
+        $this->periodicite = $periodicite;
+
+        return $this;
+    }
+
+    public function getJourRencontre(): ?int
+    {
+        return $this->jourRencontre;
+    }
+
+    public function setJourRencontre(int $jourRencontre): static
+    {
+        $this->jourRencontre = $jourRencontre;
+
+        return $this;
+    }
+
+    public function getContributionCaissePresent(): ?int
+    {
+        return $this->contributionCaissePresent;
+    }
+
+    public function setContributionCaissePresent(int $contributionCaissePresent): static
+    {
+        $this->contributionCaissePresent = $contributionCaissePresent;
+
+        return $this;
+    }
+
+    public function getContributionCaisseAbsent(): ?int
+    {
+        return $this->contributionCaisseAbsent;
+    }
+
+    public function setContributionCaisseAbsent(int $contributionCaisseAbsent): static
+    {
+        $this->contributionCaisseAbsent = $contributionCaisseAbsent;
+
+        return $this;
+    }
+
+    public function getAmendeJournaliere(): ?int
+    {
+        return $this->amendeJournaliere;
+    }
+
+    public function setAmendeJournaliere(int $amendeJournaliere): static
+    {
+        $this->amendeJournaliere = $amendeJournaliere;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Seance>
+     */
+    public function getSeances(): Collection
+    {
+        return $this->seances;
+    }
+
+    public function addSeance(Seance $seance): static
+    {
+        if (!$this->seances->contains($seance)) {
+            $this->seances->add($seance);
+            $seance->setCampagne($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSeance(Seance $seance): static
+    {
+        if ($this->seances->removeElement($seance)) {
+            // set the owning side to null (unless already changed)
+            if ($seance->getCampagne() === $this) {
+                $seance->setCampagne(null);
+            }
+        }
 
         return $this;
     }

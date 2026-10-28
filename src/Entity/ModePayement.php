@@ -24,6 +24,9 @@ class ModePayement
     #[ORM\JoinColumn(nullable: false)]
     private ?Role $role = null;
 
+    #[ORM\Column]
+    private ?int $montantChoisi = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -61,6 +64,18 @@ class ModePayement
     public function setRole(?Role $role): static
     {
         $this->role = $role;
+
+        return $this;
+    }
+
+    public function getMontantChoisi(): ?int
+    {
+        return $this->montantChoisi;
+    }
+
+    public function setMontantChoisi(int $montantChoisi): static
+    {
+        $this->montantChoisi = $montantChoisi;
 
         return $this;
     }
