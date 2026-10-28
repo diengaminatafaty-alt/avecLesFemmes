@@ -94,4 +94,8 @@ class Amende
 
         return $this;
     }
+    public function getTotal(): int
+    {
+        return $this->nombreJours * $this->montantParJour;
+    }
 }
