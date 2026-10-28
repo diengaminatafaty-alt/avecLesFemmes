@@ -28,7 +28,7 @@ class Cotisation
     #[ORM\Column]
     private ?int $contributionCaisse = null;
 
-    #[ORM\Column(length: 30)]
+    #[ORM\Column(length: 30, enumType: SituationCotisation::class)]
     private ?SituationCotisation $situation = null;
 
     public function getId(): ?int
