@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\CotisationRepository;
+use App\Enum\SituationCotisation;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CotisationRepository::class)]
@@ -28,7 +29,7 @@ class Cotisation
     private ?int $contributionCaisse = null;
 
     #[ORM\Column(length: 30)]
-    private ?string $situation = null;
+    private ?SituationCotisation $situation = null;
 
     public function getId(): ?int
     {
@@ -83,12 +84,12 @@ class Cotisation
         return $this;
     }
 
-    public function getSituation(): ?string
+    public function getSituation(): ?SituationCotisation
     {
         return $this->situation;
     }
 
-    public function setSituation(string $situation): static
+    public function setSituation(SituationCotisation $situation): static
     {
         $this->situation = $situation;
 
