@@ -24,10 +24,10 @@ class GroupementRepository extends ServiceEntityRepository
     public function findAllWithExercices(): array
     {
         return $this->createQueryBuilder('g')
-            ->leftJoin('g.exercices', 'e')
-            ->addSelect('e')
-            ->orderBy('g.nom', 'ASC')
-            ->getQuery()
-            ->getResult();
+                    ->leftJoin('g.exercices', 'e')
+                    ->addSelect('e')
+                    ->orderBy('g.nom', 'ASC')
+                    ->getQuery()
+                    ->getResult();
     }
 }
