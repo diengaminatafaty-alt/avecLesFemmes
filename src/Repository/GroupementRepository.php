@@ -16,28 +16,18 @@ class GroupementRepository extends ServiceEntityRepository
         parent::__construct($registry, Groupement::class);
     }
 
-//    /**
-//     * @return Groupement[] Returns an array of Groupement objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('g')
-//            ->andWhere('g.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('g.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
-
-//    public function findOneBySomeField($value): ?Groupement
-//    {
-//        return $this->createQueryBuilder('g')
-//            ->andWhere('g.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    /**
+     * Tous les groupements, avec leurs exercices chargés en une seule requête.
+     *
+     * @return Groupement[]
+     */
+    public function findAllWithExercices(): array
+    {
+        return $this->createQueryBuilder('g')
+                    ->leftJoin('g.exercices', 'e')
+                    ->addSelect('e')
+                    ->orderBy('g.nom', 'ASC')
+                    ->getQuery()
+                    ->getResult();
+    }
 }
