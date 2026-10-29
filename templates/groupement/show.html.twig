@@ -1,0 +1,63 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}{{ groupement.nom }} | Avec les femmes{% endblock %}
+
+{% block content %}
+    <a class="retour" href="{{ path('app_groupement_index') }}">&larr; Tous les groupements</a>
+
+    <div class="tete-page">
+        <div>
+            <h1>{{ groupement.nom }}</h1>
+            <dl class="coordonnees">
+                <div>
+                    <dt>Téléphone</dt>
+                    <dd>{{ groupement.tel }}</dd>
+                </div>
+                <div>
+                    <dt>Adresse</dt>
+                    <dd>{{ groupement.adresse }}</dd>
+                </div>
+            </dl>
+        </div>
+    </div>
+
+    <section class="panneau" aria-labelledby="titre-exercice">
+        <h2 id="titre-exercice">Exercice en cours</h2>
+        <p class="sous-titre">{{ groupement.exerciceEnCours }}</p>
+    </section>
+
+    <section class="panneau" aria-labelledby="titre-campagnes">
+        <h2 id="titre-campagnes">Campagnes</h2>
+
+        <div class="defilement">
+            <table>
+                <thead>
+                    <tr>
+                        <th scope="col">Nom</th>
+                        <th scope="col">Type</th>
+                        <th scope="col">Périodicité</th>
+                        <th scope="col">Période</th>
+                        <th scope="col" class="nombre">Montant</th>
+                        <th scope="col"><span class="visuellement-cache">Actions</span></th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for campagne in campagnes %}
+                    <tr>
+                        <td>
+                            <a class="nom-groupement" href="{{ path('app_campagne_show', {id: campagne.id}) }}">{{ campagne.nom }}</a>
+                        </td>
+                        <td>{{ campagne.type }}</td>
+                        <td>{{ campagne.periodicite }}</td>
+                        <td>{{ campagne.dateDebut }} &rarr; {{ campagne.dateFin }}</td>
+                        <td class="nombre">{{ campagne.montant|number_format(0, ',', ' ') }} FCFA</td>
+                        <td><a href="{{ path('app_campagne_show', {id: campagne.id}) }}">Détails</a></td>
+                    </tr>
+                {% else %}
+                    <tr><td colspan="6">Aucune campagne pour ce groupement.</td></tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+{% endblock %}
