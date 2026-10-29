@@ -23,7 +23,7 @@ class GroupementController extends AbstractController
     public function index(): Response
     {
         return $this->render('groupement/index.html.twig', [
-            'groupements' => $this->groupementService->getListe(),
+            'dataGroupements' => $this->groupementService->getListe(),
         ]);
     }
 
