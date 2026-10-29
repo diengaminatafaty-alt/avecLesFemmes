@@ -1,0 +1,60 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}{{ campagne.nom }} | Avec les femmes{% endblock %}
+
+{% block content %}
+    <a class="retour" href="javascript:history.back()">&larr; Retour</a>
+
+    <div class="tete-page">
+        <div>
+            <h1>{{ campagne.nom }}</h1>
+            <p class="sous-titre">
+                {{ campagne.type }} · {{ campagne.periodicite }} · rencontre le {{ campagne.jourRencontre|lower }}
+            </p>
+            <dl class="coordonnees">
+                <div>
+                    <dt>Période</dt>
+                    <dd>{{ campagne.dateDebut }} &rarr; {{ campagne.dateFin }}</dd>
+                </div>
+                <div>
+                    <dt>Cotisation</dt>
+                    <dd>{{ campagne.montant|number_format(0, ',', ' ') }} FCFA</dd>
+                </div>
+            </dl>
+        </div>
+        <div class="groupe-boutons">
+            <a class="bouton" href="{{ path('app_campagne_seances', {id: campagne.id}) }}">Voir les séances</a>
+        </div>
+    </div>
+
+    <section class="panneau" aria-labelledby="titre-membres">
+        <h2 id="titre-membres">Membres participants</h2>
+
+        <div class="defilement">
+            <table>
+                <thead>
+                    <tr>
+                        <th scope="col">Nom</th>
+                        <th scope="col">Téléphone</th>
+                        <th scope="col">Fonction</th>
+                        <th scope="col">Mode</th>
+                        <th scope="col" class="nombre">Montant</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for membre in membres %}
+                    <tr>
+                        <td>{{ membre.nom }}</td>
+                        <td>{{ membre.tel }}</td>
+                        <td>{{ membre.fonction }}</td>
+                        <td>{{ membre.mode }}</td>
+                        <td class="nombre">{{ membre.montant|number_format(0, ',', ' ') }} FCFA</td>
+                    </tr>
+                {% else %}
+                    <tr><td colspan="5">Aucun membre dans cette campagne.</td></tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+{% endblock %}
