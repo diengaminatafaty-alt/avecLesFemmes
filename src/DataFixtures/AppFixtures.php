@@ -26,6 +26,8 @@ class AppFixtures extends Fixture
         // 1. Groupement
         $groupement = new Groupement();
         $groupement->setNom('Avec Les Femmes');
+        $groupement->setAdresse('Pikine, Dakar');
+        $groupement->setTel('+221 77 000 00 00');
         $manager->persist($groupement);
 
         // 2. Exercices (un clôturé, un en cours)
