@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bricolage+Grotesque:wght@600;700&display=swap" rel="stylesheet">
+{% endblock %}
+
+{% block body %}
+<header class="entete">
+    <div class="entete__barre">
+        <a class="marque" href="{{ path('app_groupement_index') }}">
+            <svg width="28" height="28" viewBox="0 0 28 28" aria-hidden="true">
+                <path d="M3 13h22a11 11 0 0 1-22 0Z" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/>
+                <path d="M8 9c3-2.5 9-2.5 12 0" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+            </svg>
+            Avec les femmes
+        </a>
+        <nav aria-label="Navigation principale">
+            <ul class="nav">
+                <li><a href="{{ path('app_groupement_index') }}" aria-current="page">Groupements</a></li>
+            </ul>
+        </nav>
+    </div>
+    <div class="tissage"></div>
+</header>
+
+<main class="contenu">
+    {% block content %}{% endblock %}
+</main>
+{% endblock %}
